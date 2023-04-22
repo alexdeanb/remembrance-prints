@@ -48,11 +48,11 @@ export const StepOne = ( {setCurrentOrder, currentOrder} ) => {
         </fieldset>
         <fieldset>
             <div className="form-group">
-                <label htmlFor="name">Case Number:</label>
+                <label htmlFor="caseNumber">Case Number:</label>
                 <input
                     required autoFocus
                     type="number"
-                    className="form-control"
+                    className="caseNumber"
                     value={currentOrder.caseNumber}
                     onChange={
                         (evt)=>{
@@ -65,11 +65,11 @@ export const StepOne = ( {setCurrentOrder, currentOrder} ) => {
         </fieldset>
         <fieldset>
             <div className="form-group">
-                <label htmlFor="name">Date Needed:</label>
+                <label htmlFor="dateNeeded">Date Needed:</label>
                 <input
                     required autoFocus
                     type="date"
-                    className="form-control"
+                    className="dateNeeded"
                     value={currentOrder.dateNeeded}
                     onChange={
                         (evt)=>{
