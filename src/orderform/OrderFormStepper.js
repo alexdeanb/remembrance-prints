@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Stepper, Step, StepLabel, Button, ButtonGroup } from "@mui/material";
+import { FormRenderer } from "./FormRenderer";
+
 
 export const OrderFormStepper = () => {
   const [activeStep, setActiveStep] = useState(0);
@@ -32,6 +34,9 @@ export const OrderFormStepper = () => {
             <StepLabel>Special Notes</StepLabel>
           </Step>
         </Stepper>
+
+        <FormRenderer currentStep={activeStep + 1} />
+
         <ButtonGroup variant="contained">
           {activeStep > 0 ? <Button onClick={() => previousStep()}>Previous Step</Button> : ""}
           {activeStep < 4 ? (
