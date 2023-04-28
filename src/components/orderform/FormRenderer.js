@@ -4,11 +4,14 @@ import { StepTwo } from "./StepTwo";
 import { StepThree } from "./StepThree";
 import { StepFour } from "./StepFour";
 import dayjs from "dayjs";
+import { StepFive } from "./StepFive";
+import { Button, ButtonGroup, FormControl } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
-export const FormRenderer = ({ currentStep }) => {
+export const FormRenderer = ({ currentStep, setCurrentStep }) => {
   const localPrintsUser = localStorage.getItem("prints_user");
   const printsUserObject = JSON.parse(localPrintsUser);
-
+  const navigate = useNavigate();
 
   const [order, updateOrder] = useState({
     designerId: 0,
@@ -17,7 +20,6 @@ export const FormRenderer = ({ currentStep }) => {
     dateOrdered: dayjs().format("YYYY/MM/DD"),
     dateNeeded: dayjs().format("YYYY/MM/DD"),
     caseNumber: 0,
-    decedentId: 0,
     theme: "",
     mainItem: "",
     mainItemQty: 0,
@@ -36,10 +38,10 @@ export const FormRenderer = ({ currentStep }) => {
     TYCardPortrait: 0,
     TYCardCollage: 0,
     TYCardVerse: "",
-    programVerse:"",
+    programVerse: "",
     capPanel: 0,
     insert: 0,
-    specialNotes: ""
+    specialNotes: "",
   });
 
   const [decedent, updateDecedent] = useState({
@@ -48,34 +50,85 @@ export const FormRenderer = ({ currentStep }) => {
     dod: dayjs().format("YYYY/MM/DD"),
   });
 
-  // const [productOptions, updateProductOptions] = useState([])
+  const handleSaveButtonClick = (event) => {
+    event.preventDefault();
 
-  useEffect(
-    () => {
-      fetch("http://localhost:8088/decedents")
+    if (
+      order.locationId != 0 &&
+      order.caseNumber != 0 &&
+      order.theme != "" &&
+      order.primaryItem != ""
+    ) {
+      return fetch(`http://localhost:8088/decedents`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(decedent),
+      })
         .then((response) => response.json())
-        .then((decedentArray) => {
-          const copy = { ...decedent };
-          copy.id = decedentArray.length + 1;
-          updateDecedent(copy);
+        .then((postedDecedent) => {
+          order["decedentId"] = postedDecedent.id;
+          return fetch(`http://localhost:8088/orders`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(order),
+          });
+        })
+        .then(() => {
+          navigate("/");
         });
-    },
-    [] // When this array is empty, you are observing initial component state
-  );
+    } else{
+      window.alert("Please check all required fields are added")
+    }
+  };
+
+  const nextStep = () => {
+    setCurrentStep(currentStep + 1);
+  };
+
+  const previousStep = () => {
+    setCurrentStep(currentStep - 1);
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:8088/decedents")
+      .then((response) => response.json())
+      .then((decedentArray) => {
+        const copy = { ...decedent };
+        copy.id = decedentArray.length + 1;
+        updateDecedent(copy);
+      });
+  }, []);
 
   return (
     <>
       {
         {
-          1: <StepOne setCurrentOrder={updateOrder} currentOrder={order} />,
-          2: (
+          0: <StepOne setCurrentOrder={updateOrder} currentOrder={order} />,
+          1: (
             <StepTwo setDecedent={updateDecedent} currentDecedent={decedent} />
           ),
-          3: <StepThree setCurrentOrder={updateOrder} currentOrder={order} />,
-          4: <StepFour setCurrentOrder={updateOrder} currentOrder={order} />,
-          5: <></>,
+          2: <StepThree setCurrentOrder={updateOrder} currentOrder={order} />,
+          3: <StepFour setCurrentOrder={updateOrder} currentOrder={order} />,
+          4: <StepFive setCurrentOrder={updateOrder} currentOrder={order} />,
         }[currentStep]
       }
+
+      <ButtonGroup variant="contained">
+        {currentStep > 0 ? (
+          <Button onClick={() => previousStep()}>Previous Step</Button>
+        ) : (
+          ""
+        )}
+        {currentStep < 4 ? (
+          <Button onClick={() => nextStep()}>Next Step</Button>
+        ) : (
+          <Button onClick={(event) => handleSaveButtonClick(event)}>Submit Order</Button>
+        )}
+      </ButtonGroup>
     </>
   );
 };
