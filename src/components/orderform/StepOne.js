@@ -49,7 +49,7 @@ export const StepOne = ({ setCurrentOrder, currentOrder }) => {
       <div className="form-group">
         <TextField
           label="Case Number"
-          required
+          required={true}
           autoFocus
           type="number"
           className="caseNumber"
@@ -81,7 +81,7 @@ export const StepOne = ({ setCurrentOrder, currentOrder }) => {
       <div className="form-group">
         <TextField
           label="Theme"
-          required
+          required={true}
           autoFocus
           type="text"
           className="theme"

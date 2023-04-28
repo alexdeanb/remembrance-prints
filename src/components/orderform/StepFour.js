@@ -12,6 +12,8 @@ import {
   InputLabel,
   MenuItem,
   Checkbox,
+  FormControlLabel,
+  formControlLabelClasses,
 } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
@@ -21,8 +23,8 @@ export const StepFour = ({ setCurrentOrder, currentOrder }) => {
   const [allProducts, setAllProducts] = useState([]);
   const [currentProduct, setCurrentProduct] = useState("NA");
   const [quantity, setCurrentQuantity] = useState(0);
-  const [collageNames, setCollageNames] = useState(false)
-  const [collageDates, setCollageDates] = useState(false)
+  const [collageNames, setCollageNames] = useState(false);
+  const [collageDates, setCollageDates] = useState(false);
 
   useEffect(() => {
     fetch("http://localhost:8088/products")
@@ -52,23 +54,51 @@ export const StepFour = ({ setCurrentOrder, currentOrder }) => {
   const productReset = () => {
     setCurrentProduct("NA");
     setCurrentQuantity(0);
+    setCollageNames(false);
+    setCollageDates(false);
   };
 
   const collageOptions = (activeProduct) => {
     if (activeProduct === "collageL" || activeProduct === "collageS") {
       return (
         <>
-        <Checkbox
-          checked={collageNames}
-          onChange={setCollageNames(!collageNames)}
-          inputProps={{ "aria-label": "controlled" }}
-        />
-        <Checkbox
-          checked={collageDates}
-          onChange={setCollageDates(!collageDates)}
-          inputProps={{ "aria-label": "controlled" }}
-        />
-        </>);
+          <FormControlLabel
+            label="Names"
+            control={
+              <Checkbox
+                label="Names"
+                checked={collageNames}
+                onChange={(evt) => {
+                  setCollageNames(evt.target.checked);
+                  const copy = { ...currentOrder };
+                  let field = activeProduct + "Names";
+                  copy[field] = evt.target.checked;
+                  setCurrentOrder(copy);
+                }}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            }
+          />
+
+          <FormControlLabel
+            label="Dates"
+            control={
+              <Checkbox
+                label="Dates"
+                checked={collageDates}
+                onChange={(evt) => {
+                  setCollageDates(evt.target.checked);
+                  const copy = { ...currentOrder };
+                  let field = activeProduct + "Dates";
+                  copy[field] = evt.target.checked;
+                  setCurrentOrder(copy);
+                }}
+                inputProps={{ "aria-label": "controlled" }}
+              />
+            }
+          />
+        </>
+      );
     }
   };
 

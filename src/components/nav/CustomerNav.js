@@ -12,6 +12,11 @@ export const CustomerNav = () => {
                     New Order
                 </li>
             </Link>
+            <Link className="navbar__item" to="/currentOrders">
+                <li className="navbar__linkactive">
+                    Current Orders
+                </li>
+            </Link>
 
             
             <li className="navbar__item navbar__logout">

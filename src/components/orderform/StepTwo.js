@@ -12,6 +12,7 @@ export const StepTwo = ({ setDecedent, currentDecedent }) => {
       <TextField
         label="Decedent Name"
         type="text"
+        required
         className="decedentName"
         value={currentDecedent.name}
         onChange={(evt) => {

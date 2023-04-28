@@ -4,15 +4,8 @@ import { FormRenderer } from "./FormRenderer";
 
 
 export const OrderFormStepper = () => {
+
   const [activeStep, setActiveStep] = useState(0);
-
-  const nextStep = () => {
-    setActiveStep(activeStep + 1);
-  };
-
-  const previousStep = () => {
-    setActiveStep(activeStep - 1);
-  };
 
   return (
     <>
@@ -35,16 +28,9 @@ export const OrderFormStepper = () => {
           </Step>
         </Stepper>
 
-        <FormRenderer currentStep={activeStep + 1} />
+        <FormRenderer currentStep={activeStep} setCurrentStep={setActiveStep}/>
 
-        <ButtonGroup variant="contained">
-          {activeStep > 0 ? <Button onClick={() => previousStep()}>Previous Step</Button> : ""}
-          {activeStep < 4 ? (
-            <Button onClick={() => nextStep()}>Next Step</Button>
-          ) : (
-            <Button>Submit Order</Button>
-          )}
-        </ButtonGroup>
+
       </div>
     </>
   );

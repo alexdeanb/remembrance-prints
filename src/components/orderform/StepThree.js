@@ -59,6 +59,7 @@ export const StepThree = ({ setCurrentOrder, currentOrder }) => {
             id="mainItemQuantity"
             label="Quantity"
             variant="outlined"
+            required
             onChange={(evt) => {
               const copy = { ...currentOrder };
               setCurrentQuantity(parseInt(evt.target.value))
@@ -69,6 +70,7 @@ export const StepThree = ({ setCurrentOrder, currentOrder }) => {
            <TextField
             id="mainItemVerse"
             label="Verse"
+            required
             variant="outlined"
             onChange={(evt) => {
               const copy = { ...currentOrder };
