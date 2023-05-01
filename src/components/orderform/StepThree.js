@@ -33,7 +33,7 @@ export const StepThree = ({ setCurrentOrder, currentOrder }) => {
           <Select
             labelId="mainItemSelectLabel"
             id="mainItemSelect"
-            value={currentProduct}
+            value={currentOrder.mainItem}
             label="Primary Item"
             onChange={(evt) => {
               const copy = { ...currentOrder };
@@ -59,6 +59,7 @@ export const StepThree = ({ setCurrentOrder, currentOrder }) => {
             id="mainItemQuantity"
             label="Quantity"
             variant="outlined"
+            value={currentOrder.mainItemQty}
             required
             onChange={(evt) => {
               const copy = { ...currentOrder };
@@ -71,6 +72,7 @@ export const StepThree = ({ setCurrentOrder, currentOrder }) => {
             id="mainItemVerse"
             label="Verse"
             required
+            value={currentOrder.programVerse}
             variant="outlined"
             onChange={(evt) => {
               const copy = { ...currentOrder };

@@ -3,7 +3,7 @@ import { Stepper, Step, StepLabel, Button, ButtonGroup } from "@mui/material";
 import { FormRenderer } from "./FormRenderer";
 
 
-export const OrderFormStepper = () => {
+export const OrderFormStepper = ({order, updateOrder, decedent, updateDecedent, handleSaveButtonClick}) => {
 
   const [activeStep, setActiveStep] = useState(0);
 
@@ -28,7 +28,7 @@ export const OrderFormStepper = () => {
           </Step>
         </Stepper>
 
-        <FormRenderer currentStep={activeStep} setCurrentStep={setActiveStep}/>
+        <FormRenderer currentStep={activeStep} setCurrentStep={setActiveStep} order={order} updateOrder={updateOrder} decedent={decedent} updateDecedent={updateDecedent} handleSaveButtonClick={handleSaveButtonClick}/>
 
 
       </div>

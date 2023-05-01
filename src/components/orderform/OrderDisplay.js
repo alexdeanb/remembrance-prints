@@ -35,9 +35,6 @@ export const OrderDisplay = ({ order, decedent, setOrder }) => {
 
 
 
-
-
-
   return (
     <>
       <div className="OrderSummary">
@@ -48,7 +45,7 @@ export const OrderDisplay = ({ order, decedent, setOrder }) => {
             Location:{" "}
             {order.locationId > 0
               ? locations.find((location) => location.id === order.locationId)
-                  .name
+                  ?.name
               : ""}
           </li>
           <li>Case Number: {order.caseNumber}</li>
