@@ -1,6 +1,7 @@
 import { Outlet, Route, Routes } from "react-router-dom"
-import { OrderFormStepper } from "../orderform/OrderFormStepper"
 import { CurrentOrders } from "../currentorders/CurrentOrders"
+import { CreateOrder } from "../orderform/CreateOrder"
+import { EditOrder } from "../orderform/EditOrder"
 
 
 
@@ -15,8 +16,9 @@ export const CustomerViews = () => {
 					</>
 				}>
 
-					<Route path="orderform" element={ <OrderFormStepper /> } />
+					<Route path="orderform" element={ <CreateOrder /> } />
 					<Route path="currentOrders" element={ <CurrentOrders /> } />
+					<Route path="currentOrders/edit/:orderId" element={ <EditOrder /> } />
 				</Route>
 			</Routes>
 		)
