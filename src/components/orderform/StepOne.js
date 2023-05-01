@@ -5,20 +5,8 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useState } from "react";
 import { OrderDisplay } from "./OrderDisplay";
 
-export const StepOne = ({ setCurrentOrder, currentOrder }) => {
-  const [locations, setLocations] = useState([]);
+export const StepOne = ({ setCurrentOrder, currentOrder, locations, setLocations }) => {
   const [value, setValue] = useState(dayjs());
-
-  useEffect(
-    () => {
-      fetch("http://localhost:8088/locations")
-        .then((response) => response.json())
-        .then((locationArray) => {
-          setLocations(locationArray);
-        });
-    },
-    [] // When this array is empty, you are observing initial component state
-  );
 
   return (
     <>
