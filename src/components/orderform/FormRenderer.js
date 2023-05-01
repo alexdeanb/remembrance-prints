@@ -7,7 +7,8 @@ import { StepFive } from "./StepFive";
 import { Button, ButtonGroup, FormControl } from "@mui/material";
 import { OrderDisplay } from "./OrderDisplay";
 
-export const FormRenderer = ({ currentStep, setCurrentStep, order, updateOrder, handleSaveButtonClick, decedent, updateDecedent }) => {
+export const FormRenderer = ({ allProducts, locations, currentStep, setCurrentStep, order, updateOrder, handleSaveButtonClick, decedent, updateDecedent }) => {
+
 
 
   const nextStep = () => {
@@ -22,12 +23,12 @@ export const FormRenderer = ({ currentStep, setCurrentStep, order, updateOrder, 
     <>
       {
         {
-          0: <StepOne setCurrentOrder={updateOrder} currentOrder={order} />,
+          0: <StepOne locations={locations} setCurrentOrder={updateOrder} currentOrder={order} />,
           1: (
             <StepTwo setDecedent={updateDecedent} currentDecedent={decedent} />
           ),
-          2: <StepThree setCurrentOrder={updateOrder} currentOrder={order} />,
-          3: <StepFour setCurrentOrder={updateOrder} currentOrder={order} />,
+          2: <StepThree allProducts={allProducts} setCurrentOrder={updateOrder} currentOrder={order} />,
+          3: <StepFour allProducts={allProducts} setCurrentOrder={updateOrder} currentOrder={order} />,
           4: <StepFive setCurrentOrder={updateOrder} currentOrder={order} />,
         }[currentStep]
       }

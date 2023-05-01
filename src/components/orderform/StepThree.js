@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   FormControl,
   Select,
@@ -7,22 +7,11 @@ import {
   TextField,
 } from "@mui/material";
 
-export const StepThree = ({ setCurrentOrder, currentOrder }) => {
-  const [allProducts, setAllProducts] = useState([]);
+export const StepThree = ({ allProducts, setCurrentOrder, currentOrder }) => {
+
   const [currentProduct, setCurrentProduct] = useState("NA");
   const [quantity, setCurrentQuantity] = useState(0)
 
-
-  useEffect(
-    () => {
-      fetch("http://localhost:8088/products")
-        .then((response) => response.json())
-        .then((productArray) => {
-          setAllProducts(productArray);
-        });
-    },
-    []
-  );
 
 
   return (

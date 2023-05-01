@@ -9,31 +9,20 @@ import {
   TextField,
   DialogActions,
   Select,
-  InputLabel,
   MenuItem,
   Checkbox,
   FormControlLabel,
-  formControlLabelClasses,
 } from "@mui/material";
 import { useState } from "react";
-import { useEffect } from "react";
 import { OrderDisplay } from "./OrderDisplay";
 
-export const StepFour = ({ setCurrentOrder, currentOrder }) => {
+export const StepFour = ({ allProducts, setCurrentOrder, currentOrder }) => {
   const [open, setOpen] = useState(false);
-  const [allProducts, setAllProducts] = useState([]);
   const [currentProduct, setCurrentProduct] = useState("NA");
   const [quantity, setCurrentQuantity] = useState(0);
   const [collageNames, setCollageNames] = useState(false);
   const [collageDates, setCollageDates] = useState(false);
 
-  useEffect(() => {
-    fetch("http://localhost:8088/products")
-      .then((response) => response.json())
-      .then((productArray) => {
-        setAllProducts(productArray);
-      });
-  }, []);
 
   const handleClickOpen = () => {
     setOpen(true);
