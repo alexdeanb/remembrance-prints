@@ -3,6 +3,7 @@ import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import dayjs from "dayjs";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { useEffect, useState } from "react";
+import { OrderDisplay } from "./OrderDisplay";
 
 export const StepOne = ({ setCurrentOrder, currentOrder }) => {
   const [locations, setLocations] = useState([]);
@@ -92,6 +93,9 @@ export const StepOne = ({ setCurrentOrder, currentOrder }) => {
             setCurrentOrder(copy);
           }}
         />
+      </div>
+      <div>
+        
       </div>
     </>
   );

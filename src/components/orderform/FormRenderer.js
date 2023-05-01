@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import { StepFive } from "./StepFive";
 import { Button, ButtonGroup, FormControl } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { OrderDisplay } from "./OrderDisplay";
 
 export const FormRenderer = ({ currentStep, setCurrentStep }) => {
   const localPrintsUser = localStorage.getItem("prints_user");
@@ -14,8 +15,8 @@ export const FormRenderer = ({ currentStep, setCurrentStep }) => {
   const navigate = useNavigate();
 
   const [order, updateOrder] = useState({
-    designerId: 0,
-    customerId: printsUserObject.id,
+    designer: null,
+    customer: printsUserObject.id,
     locationId: 0,
     dateOrdered: dayjs().format("YYYY/MM/DD"),
     dateNeeded: dayjs().format("YYYY/MM/DD"),
@@ -116,7 +117,7 @@ export const FormRenderer = ({ currentStep, setCurrentStep }) => {
           4: <StepFive setCurrentOrder={updateOrder} currentOrder={order} />,
         }[currentStep]
       }
-
+      <OrderDisplay order={order} decedent={decedent} setOrder={updateOrder}/>
       <ButtonGroup variant="contained">
         {currentStep > 0 ? (
           <Button onClick={() => previousStep()}>Previous Step</Button>
