@@ -48,7 +48,7 @@ export const StepThree = ({ setCurrentOrder, currentOrder }) => {
             {allProducts
               .map((product) => {
                 return (
-                  <MenuItem key={product.id} value={product.value}>
+                  <MenuItem key={product.id} value={product.name}>
                     {product.name}
                   </MenuItem>
                 );
