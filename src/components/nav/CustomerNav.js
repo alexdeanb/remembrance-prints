@@ -1,34 +1,71 @@
-import { Link, useNavigate } from "react-router-dom"
+import { AppBar, Button, IconButton, Toolbar, Grid, MenuItem } from "@mui/material";
+import { Link, useNavigate } from "react-router-dom";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 
+export const CustomerNav = ({ colorMode, setColorMode }) => {
+  const navigate = useNavigate();
 
-
-export const CustomerNav = () => {
-    const navigate = useNavigate()
-
-    return (
-        <ul className="navbar">
-            <Link className="navbar__item" to="/orderform">
-                <li className="navbar__linkactive">
-                    New Order
-                </li>
-            </Link>
-            <Link className="navbar__item" to="/currentOrders">
-                <li className="navbar__linkactive">
-                    Current Orders
-                </li>
-            </Link>
-
-            
-            <li className="navbar__item navbar__logout">
-                <Link className="navbar__link" to="" onClick={() => {
-                    localStorage.removeItem("prints_user")
-                    navigate("/", {replace: true})
-                }}>Logout</Link>
-            </li>
-        </ul>
-    )
-}
-
-
-
-
+  return (
+    <>
+      <AppBar>
+        <Toolbar>
+          <Grid
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
+          container>
+            <Grid item>
+              <MenuItem
+                onClick={() => {
+                  navigate("/");
+                }}
+              >
+                Home
+              </MenuItem>
+            </Grid>
+            <Grid>
+              <MenuItem
+                onClick={() => {
+                  navigate("/orderform");
+                }}
+              >
+                New Order
+              </MenuItem>
+            </Grid>
+            <Grid>
+              <MenuItem
+                onClick={() => {
+                  navigate("/currentOrders");
+                }}
+              >
+                Current Orders
+              </MenuItem>
+              </Grid>
+              <Grid>
+              <IconButton
+                sx={{ ml: 1 }}
+                onClick={() => {
+                  setColorMode(!colorMode);
+                }}
+                color="inherit"
+              >
+                {colorMode === true ? <Brightness7Icon /> : <Brightness4Icon />}
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <MenuItem
+                onClick={() => {
+                  localStorage.removeItem("prints_user");
+                  navigate("/", { replace: true });
+                }}
+              >
+                Logout
+              </MenuItem>
+            </Grid>
+          </Grid>
+        </Toolbar>
+      </AppBar>
+    </>
+  );
+};
