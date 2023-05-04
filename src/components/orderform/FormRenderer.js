@@ -1,16 +1,22 @@
-import { useState, useEffect } from "react";
 import { StepOne } from "./StepOne";
 import { StepTwo } from "./StepTwo";
 import { StepThree } from "./StepThree";
 import { StepFour } from "./StepFour";
 import { StepFive } from "./StepFive";
-import { Button, ButtonGroup, FormControl } from "@mui/material";
+import { Box, Button, ButtonGroup, Container, FormControl } from "@mui/material";
 import { OrderDisplay } from "./OrderDisplay";
 
-export const FormRenderer = ({ allProducts, locations, currentStep, setCurrentStep, order, updateOrder, handleSaveButtonClick, decedent, updateDecedent }) => {
-
-
-
+export const FormRenderer = ({
+  allProducts,
+  locations,
+  currentStep,
+  setCurrentStep,
+  order,
+  updateOrder,
+  handleSaveButtonClick,
+  decedent,
+  updateDecedent,
+}) => {
   const nextStep = () => {
     setCurrentStep(currentStep + 1);
   };
@@ -23,17 +29,36 @@ export const FormRenderer = ({ allProducts, locations, currentStep, setCurrentSt
     <>
       {
         {
-          0: <StepOne locations={locations} setCurrentOrder={updateOrder} currentOrder={order} />,
+          0: (
+            <StepOne
+              locations={locations}
+              setCurrentOrder={updateOrder}
+              currentOrder={order}
+            />
+          ),
           1: (
             <StepTwo setDecedent={updateDecedent} currentDecedent={decedent} />
           ),
-          2: <StepThree allProducts={allProducts} setCurrentOrder={updateOrder} currentOrder={order} />,
-          3: <StepFour allProducts={allProducts} setCurrentOrder={updateOrder} currentOrder={order} />,
+          2: (
+            <StepThree
+              allProducts={allProducts}
+              setCurrentOrder={updateOrder}
+              currentOrder={order}
+            />
+          ),
+          3: (
+            <StepFour
+              allProducts={allProducts}
+              setCurrentOrder={updateOrder}
+              currentOrder={order}
+            />
+          ),
           4: <StepFive setCurrentOrder={updateOrder} currentOrder={order} />,
         }[currentStep]
       }
-      <OrderDisplay order={order} decedent={decedent} setOrder={updateOrder}/>
-      <ButtonGroup variant="contained">
+      
+      <Box textAlign="center" sx={{pt:5}}>
+        <ButtonGroup variant="contained" >
         {currentStep > 0 ? (
           <Button onClick={() => previousStep()}>Previous Step</Button>
         ) : (
@@ -42,9 +67,13 @@ export const FormRenderer = ({ allProducts, locations, currentStep, setCurrentSt
         {currentStep < 4 ? (
           <Button onClick={() => nextStep()}>Next Step</Button>
         ) : (
-          <Button onClick={(event) => handleSaveButtonClick(event)}>Submit Order</Button>
+          <Button onClick={(event) => handleSaveButtonClick(event)}>
+            Submit Order
+          </Button>
         )}
       </ButtonGroup>
+      </Box>
+      <OrderDisplay order={order} decedent={decedent} setOrder={updateOrder} />
     </>
   );
 };

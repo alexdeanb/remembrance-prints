@@ -5,46 +5,57 @@ import {
   InputLabel,
   MenuItem,
   TextField,
+  Container,
+  Stack,
 } from "@mui/material";
 
 export const StepThree = ({ allProducts, setCurrentOrder, currentOrder }) => {
-
   const [currentProduct, setCurrentProduct] = useState("NA");
-  const [quantity, setCurrentQuantity] = useState(0)
-
-
+  const [quantity, setCurrentQuantity] = useState(0);
 
   return (
     <>
-      <div>
-        <FormControl>
-          <InputLabel id="mainItemSelectLabel">Primary Item</InputLabel>
-          <Select
-            labelId="mainItemSelectLabel"
-            id="mainItemSelect"
-            value={currentOrder.mainItem}
-            label="Primary Item"
-            onChange={(evt) => {
-              const copy = { ...currentOrder };
-              setCurrentProduct(evt.target.value)
-              copy.mainItem = evt.target.value;
-              setCurrentOrder(copy);
-            }}
-          >
-            <MenuItem key="0" value="NA">
-              Select an Item...
-            </MenuItem>
-            {allProducts
-              .map((product) => {
-                return (
-                  <MenuItem key={product.id} value={product.name}>
-                    {product.name}
-                  </MenuItem>
-                );
-              })
-              .slice(0, 3)}
-          </Select>
+      <Container>
+        <Stack
+          sx={{
+            width: 300,
+            mx: "auto",
+            pt: 5,
+          }}
+          spacing={4}
+        >
+          <FormControl>
+            <InputLabel id="mainItemSelectLabel">Primary Item</InputLabel>
+            <Select
+              sx={{
+                width: 300,
+              }}
+              labelId="mainItemSelectLabel"
+              label="Primary Item"
+              id="mainItemSelect"
+              value={currentOrder.mainItem}
+              onChange={(evt) => {
+                const copy = { ...currentOrder };
+                setCurrentProduct(evt.target.value);
+                copy.mainItem = evt.target.value;
+                setCurrentOrder(copy);
+              }}
+            >
+              {allProducts
+                .map((product) => {
+                  return (
+                    <MenuItem key={product.id} value={product.name}>
+                      {product.name}
+                    </MenuItem>
+                  );
+                })
+                .slice(0, 3)}
+            </Select>
+          </FormControl>
           <TextField
+            sx={{
+              width: 300,
+            }}
             id="mainItemQuantity"
             label="Quantity"
             variant="outlined"
@@ -52,12 +63,15 @@ export const StepThree = ({ allProducts, setCurrentOrder, currentOrder }) => {
             required
             onChange={(evt) => {
               const copy = { ...currentOrder };
-              setCurrentQuantity(parseInt(evt.target.value))
+              setCurrentQuantity(parseInt(evt.target.value));
               copy.mainItemQty = parseInt(evt.target.value);
               setCurrentOrder(copy);
             }}
           />
-           <TextField
+          <TextField
+            sx={{
+              width: 300,
+            }}
             id="mainItemVerse"
             label="Verse"
             required
@@ -69,8 +83,8 @@ export const StepThree = ({ allProducts, setCurrentOrder, currentOrder }) => {
               setCurrentOrder(copy);
             }}
           />
-        </FormControl>
-      </div>
+        </Stack>
+      </Container>
     </>
   );
 };

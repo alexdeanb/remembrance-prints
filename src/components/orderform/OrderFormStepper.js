@@ -2,30 +2,30 @@ import { useState, useEffect } from "react";
 import { Stepper, Step, StepLabel, Button, ButtonGroup } from "@mui/material";
 import { FormRenderer } from "./FormRenderer";
 
-
-export const OrderFormStepper = ({order, updateOrder, decedent, updateDecedent, handleSaveButtonClick}) => {
-
+export const OrderFormStepper = ({
+  order,
+  updateOrder,
+  decedent,
+  updateDecedent,
+  handleSaveButtonClick,
+}) => {
   const [activeStep, setActiveStep] = useState(0);
   const [locations, setLocations] = useState([]);
   const [allProducts, setAllProducts] = useState([]);
 
-  useEffect(
-    () => {
-      fetch("http://localhost:8088/locations")
-        .then((response) => response.json())
-        .then((locationArray) => {
-          setLocations(locationArray);
-        });
+  useEffect(() => {
+    fetch("http://localhost:8088/locations")
+      .then((response) => response.json())
+      .then((locationArray) => {
+        setLocations(locationArray);
+      });
 
-        fetch("http://localhost:8088/products")
-        .then((response) => response.json())
-        .then((productArray) => {
-          setAllProducts(productArray);
-        });
-    },
-    [] // When this array is empty, you are observing initial component state
-  );
-
+    fetch("http://localhost:8088/products")
+      .then((response) => response.json())
+      .then((productArray) => {
+        setAllProducts(productArray);
+      });
+  }, []);
 
   return (
     <>
@@ -48,9 +48,17 @@ export const OrderFormStepper = ({order, updateOrder, decedent, updateDecedent, 
           </Step>
         </Stepper>
 
-        <FormRenderer allProducts={allProducts} locations={locations} currentStep={activeStep} setCurrentStep={setActiveStep} order={order} updateOrder={updateOrder} decedent={decedent} updateDecedent={updateDecedent} handleSaveButtonClick={handleSaveButtonClick}/>
-
-
+        <FormRenderer
+          allProducts={allProducts}
+          locations={locations}
+          currentStep={activeStep}
+          setCurrentStep={setActiveStep}
+          order={order}
+          updateOrder={updateOrder}
+          decedent={decedent}
+          updateDecedent={updateDecedent}
+          handleSaveButtonClick={handleSaveButtonClick}
+        />
       </div>
     </>
   );

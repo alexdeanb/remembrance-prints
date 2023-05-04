@@ -6,9 +6,9 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Order } from "./Order";
+import { Order } from "../currentorders/Order";
 
-export const CurrentOrders = () => {
+export const CompletedOrders = () => {
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
 
@@ -31,7 +31,7 @@ useEffect(
  useEffect(
   () =>{
     
-    const filterOrders = structuredClone(orders).filter((order) => order.completed === false)
+    const filterOrders = structuredClone(orders).filter((order) => order.completed === true)
 
     setFilteredOrders(filterOrders)
   },
@@ -41,10 +41,9 @@ useEffect(
 
 
 
-
   return (
     <>
-    <h1>Current Orders</h1>
+    <h1>Completed Orders</h1>
       <div>
         <TableContainer>
           <Table>
@@ -54,12 +53,12 @@ useEffect(
                 <TableCell>Location</TableCell>
                 <TableCell>Case Number</TableCell>
                 <TableCell>Date Ordered</TableCell>
-                <TableCell>Date Needed</TableCell>
+                <TableCell>Date Completed</TableCell>
                 <TableCell>Designer</TableCell>
               </TableRow>
               {filteredOrders.map((order) => (
                 <TableRow key={`order--${order.id}`}>
-                  <Order ticketObject={order} getAllOrders={getAllOrders}/>
+                  <Order ticketObject={order}getAllOrders={getAllOrders}/>
                 </TableRow>
               ))}
             </TableHead>

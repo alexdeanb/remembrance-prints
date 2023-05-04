@@ -12,6 +12,9 @@ import {
   MenuItem,
   Checkbox,
   FormControlLabel,
+  Container,
+  Stack,
+  FormControl,
 } from "@mui/material";
 import { useState } from "react";
 import { OrderDisplay } from "./OrderDisplay";
@@ -22,7 +25,6 @@ export const StepFour = ({ allProducts, setCurrentOrder, currentOrder }) => {
   const [quantity, setCurrentQuantity] = useState(0);
   const [collageNames, setCollageNames] = useState(false);
   const [collageDates, setCollageDates] = useState(false);
-
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -94,52 +96,63 @@ export const StepFour = ({ allProducts, setCurrentOrder, currentOrder }) => {
 
   return (
     <>
-      <div>
-        <Fab onClick={handleClickOpen}>
-          <Icon>add</Icon>
-        </Fab>
-        <Dialog open={open} onClose={handleClose}>
-          <DialogTitle>Additional Item</DialogTitle>
-          <DialogContent>
-            <DialogContentText>
-              Please select what you'd like to add to your order.
-            </DialogContentText>
-            <Select
-              id="AdditionalSelect"
-              value={currentProduct}
-              onChange={(evt) => {
-                setCurrentProduct(evt.target.value);
-              }}
-            >
-              <MenuItem key="0" value="NA">
-                Select an Item...
-              </MenuItem>
-              {allProducts
-                .map((product) => {
-                  return (
-                    <MenuItem key={product.id} value={product.value}>
-                      {product.name}
-                    </MenuItem>
-                  );
-                })
-                .slice(3, -1)}
-            </Select>
-            <TextField
-              id="mainItemQuantity"
-              label="Quantity"
-              variant="outlined"
-              onChange={(evt) => {
-                setCurrentQuantity(parseInt(evt.target.value));
-              }}
-            />
-            {collageOptions(currentProduct)}
-          </DialogContent>
-          <DialogActions>
-            <Button onClick={handleClose}>Cancel</Button>
-            <Button onClick={handleClose}>Add Product</Button>
-          </DialogActions>
-        </Dialog>
-      </div>
+      <Container>
+        <Stack
+          sx={{
+            width: 56,
+            mx: "auto",
+            mt: 5,
+          }}
+          spacing={4}
+        >
+          <FormControl>
+            <Fab onClick={handleClickOpen}>
+              <Icon>add</Icon>
+            </Fab>
+          </FormControl>
+        </Stack>
+      </Container>
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle>Additional Item</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+            Please select what you'd like to add to your order.
+          </DialogContentText>
+          <Select
+            id="AdditionalSelect"
+            value={currentProduct}
+            onChange={(evt) => {
+              setCurrentProduct(evt.target.value);
+            }}
+          >
+            <MenuItem key="0" value="NA">
+              Select an Item...
+            </MenuItem>
+            {allProducts
+              .map((product) => {
+                return (
+                  <MenuItem key={product.id} value={product.value}>
+                    {product.name}
+                  </MenuItem>
+                );
+              })
+              .slice(3, -1)}
+          </Select>
+          <TextField
+            id="mainItemQuantity"
+            label="Quantity"
+            variant="outlined"
+            onChange={(evt) => {
+              setCurrentQuantity(parseInt(evt.target.value));
+            }}
+          />
+          {collageOptions(currentProduct)}
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button onClick={handleClose}>Add Product</Button>
+        </DialogActions>
+      </Dialog>
     </>
   );
 };
