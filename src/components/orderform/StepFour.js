@@ -106,7 +106,7 @@ export const StepFour = ({ allProducts, setCurrentOrder, currentOrder }) => {
           spacing={4}
         >
           <FormControl>
-            <Fab onClick={handleClickOpen}>
+            <Fab onClick={handleClickOpen} color="primary">
               <Icon>add</Icon>
             </Fab>
           </FormControl>

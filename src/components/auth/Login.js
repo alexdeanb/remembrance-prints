@@ -60,9 +60,6 @@ export const Login = () => {
                     </fieldset>
                 </form>
             </section>
-            <section className="link--register">
-                <Link to="/register">Not a member yet?</Link>
-            </section>
         </main>
     )
 }

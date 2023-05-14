@@ -57,12 +57,12 @@ useEffect(
                 <TableCell>Date Needed</TableCell>
                 <TableCell>Designer</TableCell>
               </TableRow>
+              </TableHead>
               {filteredOrders.map((order) => (
                 <TableRow key={`order--${order.id}`}>
                   <Order ticketObject={order} getAllOrders={getAllOrders}/>
                 </TableRow>
               ))}
-            </TableHead>
           </Table>
         </TableContainer>
       </div>

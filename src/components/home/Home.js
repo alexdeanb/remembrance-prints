@@ -2,7 +2,6 @@ import { Card, CardActions, CardContent } from "@mui/material"
 import { useEffect, useState } from "react";
 import { MainItem } from "./MainItem";
 import { ActiveByLocation } from "./ActiveByLocation";
-import { Container } from "@mui/system";
 
 
 export const Home = () => {

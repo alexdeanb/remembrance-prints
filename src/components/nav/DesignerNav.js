@@ -1,10 +1,23 @@
-import { AppBar, Button, IconButton, Toolbar, Grid, MenuItem } from "@mui/material";
-import { Link, useNavigate } from "react-router-dom";
+import { AppBar, IconButton, Toolbar, Grid, MenuItem, Menu } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
+import { useState } from "react";
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
 export const DesignerNav = ({ colorMode, setColorMode }) => {
   const navigate = useNavigate();
+  const [drawer, setDrawer] = useState(false)
+  const [anchorEl, setAnchorEl] = useState(null)
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget)
+    setDrawer(!drawer)
+  }
+  const handleClose = () => {
+    setAnchorEl(null)
+    setDrawer(!drawer)
+  }
 
   return (
     <>
@@ -42,6 +55,15 @@ export const DesignerNav = ({ colorMode, setColorMode }) => {
                 Completed Orders
               </MenuItem>
               </Grid>
+            <Grid>
+              <MenuItem
+                onClick={() => {
+                  navigate("/roster");
+                }}
+              >
+               Users
+              </MenuItem>
+              </Grid>
               <Grid>
               <IconButton
                 sx={{ ml: 1 }}
@@ -54,14 +76,25 @@ export const DesignerNav = ({ colorMode, setColorMode }) => {
               </IconButton>
             </Grid>
             <Grid item>
-              <MenuItem
-                onClick={() => {
+            <IconButton
+                sx={{ ml: 1 }}
+                onClick={(evt) => {
+                  handleClick(evt)
+
+                }}
+                color="inherit"
+              >
+                {drawer === true ? <CloseIcon /> : <MenuIcon />}
+              </IconButton>
+              <Menu anchorEl={anchorEl} open={drawer} onClose={handleClose}>
+                <MenuItem onClick={() => {
+                  navigate("/myAccount")
+                }}>My Account</MenuItem>
+                <MenuItem onClick={() => {
                   localStorage.removeItem("prints_user");
                   navigate("/", { replace: true });
-                }}
-              >
-                Logout
-              </MenuItem>
+                }}>Logout</MenuItem>
+              </Menu>
             </Grid>
           </Grid>
         </Toolbar>

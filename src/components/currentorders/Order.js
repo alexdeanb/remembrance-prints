@@ -1,4 +1,4 @@
-import { TableCell } from "@mui/material";
+import { TableCell, Tooltip } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
@@ -10,10 +10,9 @@ export const Order = ({ ticketObject, getAllOrders }) => {
 
   const [locations, setLocations] = useState([]);
   const [users, setUsers] = useState([]);
+  const [products, setProducts] = useState([])
   const navigate = useNavigate();
 
-
-  
   useEffect(
     () => {
       fetch("http://localhost:8088/users")
@@ -27,6 +26,14 @@ export const Order = ({ ticketObject, getAllOrders }) => {
         .then((locationsArray) => {
           setLocations(locationsArray);
         });
+
+      fetch("http://localhost:8088/products")
+        .then((response) => response.json())
+        .then((productArray) => {
+        setProducts(productArray);
+      })
+
+
     },
     [] // When this array is empty, you are observing initial component state
   );
@@ -42,7 +49,7 @@ export const Order = ({ ticketObject, getAllOrders }) => {
           onClick={() => {
             fetch(`http://localhost:8088/orders/${ticketObject.id}`, {
               method: "DELETE",
-            });
+            }).then(getAllOrders);
           }}
         >
           Delete?
@@ -55,61 +62,53 @@ export const Order = ({ ticketObject, getAllOrders }) => {
 
   const updateDesigner = () => {
     fetch(`http://localhost:8088/orders/${ticketObject.id}`)
-    .then(response => response.json())
-    .then((data) => {
-      data.designer = printsUserObject.id
-       fetch(`http://localhost:8088/orders/${ticketObject.id}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-          .then(getAllOrders)
-          
-        
-    })
-
-
-  }
-
+      .then((response) => response.json())
+      .then((data) => {
+        data.designer = printsUserObject.id;
+        fetch(`http://localhost:8088/orders/${ticketObject.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }).then(getAllOrders);
+      });
+  };
 
   const updateCompletion = () => {
     fetch(`http://localhost:8088/orders/${ticketObject.id}`)
-    .then(response => response.json())
-    .then((data) => {
-      data.completed = true
-      data.dateCompleted = dayjs().format("YYYY/MM/DD")
-       fetch(`http://localhost:8088/orders/${ticketObject.id}`, {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data),
-          })
-          .then(getAllOrders)
-          
-        
-    })
-
-
-  }
+      .then((response) => response.json())
+      .then((data) => {
+        data.completed = true;
+        data.dateCompleted = dayjs().format("YYYY/MM/DD");
+        fetch(`http://localhost:8088/orders/${ticketObject.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        }).then(getAllOrders);
+      });
+  };
 
   const completeOrder = () => {
-    if(ticketObject.designer === printsUserObject.id && ticketObject.completed === false){
-      return <Button onClick={() => updateCompletion()}>Complete</Button>
-    } else{
-      return
+    if (
+      ticketObject.designer === printsUserObject.id &&
+      ticketObject.completed === false
+    ) {
+      return <Button onClick={() => updateCompletion()}>Complete</Button>;
+    } else {
+      return;
     }
-  }
+  };
 
   const claimTicket = () => {
-    if(!ticketObject.designer && printsUserObject.designer){
-      return <Button onClick={() => updateDesigner()}>Claim</Button>
-    }else{
-      return
+    if (!ticketObject.designer && printsUserObject.designer) {
+      return <Button onClick={() => updateDesigner()}>Claim</Button>;
+    } else {
+      return;
     }
-  }
+  };
 
   const hasDesigner = () => {
     if (!ticketObject.designer) {
@@ -120,7 +119,10 @@ export const Order = ({ ticketObject, getAllOrders }) => {
   };
 
   const editOrder = (order) => {
-    if (ticketObject.customer === printsUserObject.id && !printsUserObject.designer) {
+    if (
+      ticketObject.customer === printsUserObject.id &&
+      !printsUserObject.designer
+    ) {
       return (
         <>
           <Button
@@ -143,18 +145,35 @@ export const Order = ({ ticketObject, getAllOrders }) => {
   );
 
   const completedOrNeeded = () => {
-    if(ticketObject.dateCompleted !== ""){
-      return ticketObject.dateCompleted
-    }else{
-      return ticketObject.dateNeeded
+    if (ticketObject.dateCompleted !== "") {
+      return ticketObject.dateCompleted;
+    } else {
+      return ticketObject.dateNeeded;
     }
-  }
+  };
 
   return (
     <>
+
       <TableCell>{matchingCustomer?.name}</TableCell>
       <TableCell>{matchingLocation?.name}</TableCell>
-      <TableCell>{ticketObject?.caseNumber}</TableCell>
+      <Tooltip placement="left" arrow title={
+        <>
+          <li>{ticketObject.mainItem}: {ticketObject.mainItemQty}</li>
+          {products.map((product) => {
+              if (ticketObject[product.value] > 0) {
+                return (
+                  <>
+                    <li>
+                      {product.name}: {ticketObject[product.value]}
+                    </li>
+                </>)
+              }})
+            }
+        </>
+      }>
+        <TableCell>{ticketObject?.caseNumber}</TableCell>
+      </Tooltip>
       <TableCell>{ticketObject?.dateOrdered}</TableCell>
       <TableCell>{completedOrNeeded()}</TableCell>
       <TableCell>
