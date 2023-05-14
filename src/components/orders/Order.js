@@ -43,7 +43,7 @@ export const Order = ({ ticketObject, getAllOrders }) => {
   );
 
   const hasDeleteButton = () => {
-    if (ticketObject.customer === printsUserObject.id) {
+    if (ticketObject.customer === printsUserObject.id && ticketObject.dateCompleted === "") {
       return (
         <Button
           onClick={() => {
@@ -121,7 +121,8 @@ export const Order = ({ ticketObject, getAllOrders }) => {
   const editOrder = (order) => {
     if (
       ticketObject.customer === printsUserObject.id &&
-      !printsUserObject.designer
+      !printsUserObject.designer && 
+      ticketObject.dateCompleted === ""
     ) {
       return (
         <>

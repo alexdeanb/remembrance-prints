@@ -40,19 +40,10 @@ export const DesignerNav = ({ colorMode, setColorMode }) => {
             <Grid>
               <MenuItem
                 onClick={() => {
-                  navigate("/currentOrders");
+                  navigate("/orders");
                 }}
               >
-                Current Orders
-              </MenuItem>
-              </Grid>
-            <Grid>
-              <MenuItem
-                onClick={() => {
-                  navigate("/completedOrders");
-                }}
-              >
-                Completed Orders
+                Orders
               </MenuItem>
               </Grid>
             <Grid>

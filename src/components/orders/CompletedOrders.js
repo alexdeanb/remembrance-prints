@@ -6,7 +6,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import { Order } from "../currentorders/Order";
+import { Order } from "./Order";
 
 export const CompletedOrders = () => {
   const [orders, setOrders] = useState([]);

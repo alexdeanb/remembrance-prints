@@ -50,10 +50,10 @@ export const CustomerNav = ({ colorMode, setColorMode }) => {
             <Grid>
               <MenuItem
                 onClick={() => {
-                  navigate("/currentOrders");
+                  navigate("/orders");
                 }}
               >
-                Current Orders
+                Orders
               </MenuItem>
               </Grid>
               <Grid>
