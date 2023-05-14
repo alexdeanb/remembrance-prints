@@ -23,7 +23,6 @@ export const CustomerViews = () => {
         <Route path="orders" element={<OrderViewer />} />
         <Route path="currentOrders/edit/:orderId" element={<EditOrder />} />
         <Route path="/myAccount" element={<MyAccount />} />
-
       </Route>
     </Routes>
   );

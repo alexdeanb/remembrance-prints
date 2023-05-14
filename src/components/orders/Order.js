@@ -10,40 +10,38 @@ export const Order = ({ ticketObject, getAllOrders }) => {
 
   const [locations, setLocations] = useState([]);
   const [users, setUsers] = useState([]);
-  const [products, setProducts] = useState([])
+  const [products, setProducts] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(
-    () => {
-      fetch("http://localhost:8088/users")
-        .then((response) => response.json())
-        .then((userArray) => {
-          setUsers(userArray);
-        });
+  useEffect(() => {
+    fetch("http://localhost:8088/users")
+      .then((response) => response.json())
+      .then((userArray) => {
+        setUsers(userArray);
+      });
 
-      fetch("http://localhost:8088/locations")
-        .then((response) => response.json())
-        .then((locationsArray) => {
-          setLocations(locationsArray);
-        });
+    fetch("http://localhost:8088/locations")
+      .then((response) => response.json())
+      .then((locationsArray) => {
+        setLocations(locationsArray);
+      });
 
-      fetch("http://localhost:8088/products")
-        .then((response) => response.json())
-        .then((productArray) => {
+    fetch("http://localhost:8088/products")
+      .then((response) => response.json())
+      .then((productArray) => {
         setProducts(productArray);
-      })
-
-
-    },
-    [] // When this array is empty, you are observing initial component state
-  );
+      });
+  }, []);
 
   const matchingDesigner = users.find(
     (user) => user.id === ticketObject.designer
   );
 
   const hasDeleteButton = () => {
-    if (ticketObject.customer === printsUserObject.id && ticketObject.dateCompleted === "") {
+    if (
+      ticketObject.customer === printsUserObject.id &&
+      ticketObject.dateCompleted === ""
+    ) {
       return (
         <Button
           onClick={() => {
@@ -121,7 +119,7 @@ export const Order = ({ ticketObject, getAllOrders }) => {
   const editOrder = (order) => {
     if (
       ticketObject.customer === printsUserObject.id &&
-      !printsUserObject.designer && 
+      !printsUserObject.designer &&
       ticketObject.dateCompleted === ""
     ) {
       return (
@@ -155,24 +153,30 @@ export const Order = ({ ticketObject, getAllOrders }) => {
 
   return (
     <>
-
       <TableCell>{matchingCustomer?.name}</TableCell>
       <TableCell>{matchingLocation?.name}</TableCell>
-      <Tooltip placement="left" arrow title={
-        <>
-          <li>{ticketObject.mainItem}: {ticketObject.mainItemQty}</li>
-          {products.map((product) => {
+      <Tooltip
+        placement="left"
+        arrow
+        title={
+          <>
+            <li>
+              {ticketObject.mainItem}: {ticketObject.mainItemQty}
+            </li>
+            {products.map((product) => {
               if (ticketObject[product.value] > 0) {
                 return (
                   <>
                     <li>
                       {product.name}: {ticketObject[product.value]}
                     </li>
-                </>)
-              }})
-            }
-        </>
-      }>
+                  </>
+                );
+              }
+            })}
+          </>
+        }
+      >
         <TableCell>{ticketObject?.caseNumber}</TableCell>
       </Tooltip>
       <TableCell>{ticketObject?.dateOrdered}</TableCell>

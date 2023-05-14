@@ -3,7 +3,7 @@ import { StepTwo } from "./StepTwo";
 import { StepThree } from "./StepThree";
 import { StepFour } from "./StepFour";
 import { StepFive } from "./StepFive";
-import { Box, Button, ButtonGroup, Container, FormControl } from "@mui/material";
+import { Box, Button, ButtonGroup } from "@mui/material";
 import { OrderDisplay } from "./OrderDisplay";
 
 export const FormRenderer = ({
@@ -56,22 +56,22 @@ export const FormRenderer = ({
           4: <StepFive setCurrentOrder={updateOrder} currentOrder={order} />,
         }[currentStep]
       }
-      
-      <Box textAlign="center" sx={{pt:5}}>
-        <ButtonGroup variant="contained" >
-        {currentStep > 0 ? (
-          <Button onClick={() => previousStep()}>Previous Step</Button>
-        ) : (
-          ""
-        )}
-        {currentStep < 4 ? (
-          <Button onClick={() => nextStep()}>Next Step</Button>
-        ) : (
-          <Button onClick={(event) => handleSaveButtonClick(event)}>
-            Submit Order
-          </Button>
-        )}
-      </ButtonGroup>
+
+      <Box textAlign="center" sx={{ pt: 5 }}>
+        <ButtonGroup variant="contained">
+          {currentStep > 0 ? (
+            <Button onClick={() => previousStep()}>Previous Step</Button>
+          ) : (
+            ""
+          )}
+          {currentStep < 4 ? (
+            <Button onClick={() => nextStep()}>Next Step</Button>
+          ) : (
+            <Button onClick={(event) => handleSaveButtonClick(event)}>
+              Submit Order
+            </Button>
+          )}
+        </ButtonGroup>
       </Box>
       <OrderDisplay order={order} decedent={decedent} setOrder={updateOrder} />
     </>

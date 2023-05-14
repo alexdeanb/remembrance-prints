@@ -15,9 +15,7 @@ export const User = ({ userObject, getAllUsers }) => {
   };
 
   const deleteUser = () => {
-    if (
-      userObject.id !== printsUserObject.id
-    ) {
+    if (userObject.id !== printsUserObject.id) {
       return (
         <Button
           onClick={() => {

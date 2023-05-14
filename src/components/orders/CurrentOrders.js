@@ -12,39 +12,29 @@ export const CurrentOrders = () => {
   const [orders, setOrders] = useState([]);
   const [filteredOrders, setFilteredOrders] = useState([]);
 
- const getAllOrders = () => {
-  fetch("http://localhost:8088/orders")
-  .then((response) => response.json())
-  .then((orderArray) => {
-    setOrders(orderArray);
-  });
- }
+  const getAllOrders = () => {
+    fetch("http://localhost:8088/orders")
+      .then((response) => response.json())
+      .then((orderArray) => {
+        setOrders(orderArray);
+      });
+  };
 
+  useEffect(() => {
+    getAllOrders();
+  }, []);
 
-useEffect(
-    () =>{
-        getAllOrders()
-    },
-    []
-)
+  useEffect(() => {
+    const filterOrders = structuredClone(orders).filter(
+      (order) => order.completed === false
+    );
 
- useEffect(
-  () =>{
-    
-    const filterOrders = structuredClone(orders).filter((order) => order.completed === false)
-
-    setFilteredOrders(filterOrders)
-  },
-  [orders]
- )
-
-
-
-
+    setFilteredOrders(filterOrders);
+  }, [orders]);
 
   return (
     <>
-    <h1>Current Orders</h1>
+      <h1>Current Orders</h1>
       <div>
         <TableContainer>
           <Table>
@@ -57,12 +47,12 @@ useEffect(
                 <TableCell>Date Needed</TableCell>
                 <TableCell>Designer</TableCell>
               </TableRow>
-              </TableHead>
-              {filteredOrders.map((order) => (
-                <TableRow key={`order--${order.id}`}>
-                  <Order ticketObject={order} getAllOrders={getAllOrders}/>
-                </TableRow>
-              ))}
+            </TableHead>
+            {filteredOrders.map((order) => (
+              <TableRow key={`order--${order.id}`}>
+                <Order ticketObject={order} getAllOrders={getAllOrders} />
+              </TableRow>
+            ))}
           </Table>
         </TableContainer>
       </div>

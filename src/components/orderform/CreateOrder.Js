@@ -39,7 +39,7 @@ export const CreateOrder = () => {
     insert: 0,
     specialNotes: "",
     completed: false,
-    dateCompleted: ""
+    dateCompleted: "",
   });
 
   const [decedent, updateDecedent] = useState({

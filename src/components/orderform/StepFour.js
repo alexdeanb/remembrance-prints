@@ -17,7 +17,6 @@ import {
   FormControl,
 } from "@mui/material";
 import { useState } from "react";
-import { OrderDisplay } from "./OrderDisplay";
 
 export const StepFour = ({ allProducts, setCurrentOrder, currentOrder }) => {
   const [open, setOpen] = useState(false);
