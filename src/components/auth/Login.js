@@ -1,3 +1,14 @@
+import {
+  Button,
+  Container,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+} from "@mui/material";
+import "./Login.css"
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -31,41 +42,40 @@ export const Login = () => {
       });
   };
 
-  return (
-    <main className="container--login">
-      <section>
-        <form className="form--login" onSubmit={handleLogin}>
-          <h1>Remembrance Prints</h1>
-          <h2>Please sign in</h2>
-          <fieldset>
-            <label htmlFor="inputEmail"> Email address </label>
-            <input
-              type="email"
-              value={email}
-              onChange={(evt) => setEmail(evt.target.value)}
-              className="form-control"
-              placeholder="Email address"
-              required
-              autoFocus
-            />
-          </fieldset>
-          <fieldset>
-            <label htmlFor="inputPassword"> Password </label>
-            <input
-              type="password"
-              value={password}
-              onChange={(evt) => setPassword(evt.target.value)}
-              className="form-control"
-              placeholder="Password"
-              required
-              autoFocus
-            />
-          </fieldset>
-          <fieldset>
-            <button type="submit">Sign in</button>
-          </fieldset>
-        </form>
-      </section>
-    </main>
+  return (<>
+   
+    <Container>
+    <h1>Remembrance Prints</h1>
+    <h2>Please sign in</h2>
+      <Stack
+      sx={{
+        width: 300,
+        mx: "auto",
+        pt: 5,
+      }}
+      spacing={4}>
+
+          <TextField
+          sx={{width:300}}
+          label="Email"
+          required={true}
+          autoFocus
+          type="email"
+          value={email}
+          onChange={(evt) => setEmail(evt.target.value)}
+          />
+          <TextField
+          sx={{width:300}}
+          label="Password"
+          required={true}
+          autoFocus
+          type="password"
+          value={password}
+          onChange={(evt) => setPassword(evt.target.value)}
+          />
+          <Button type="submit" onClick={handleLogin}>Sign in</Button>
+      </Stack>
+    </Container>
+    </>
   );
 };

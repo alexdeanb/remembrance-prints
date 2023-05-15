@@ -17,9 +17,11 @@ export const DesignerNav = ({ colorMode, setColorMode }) => {
   const navigate = useNavigate();
   const [drawer, setDrawer] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  let clicked = 0 
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     setDrawer(!drawer);
+   clicked = clicked + 1 
   };
   const handleClose = () => {
     setAnchorEl(null);
