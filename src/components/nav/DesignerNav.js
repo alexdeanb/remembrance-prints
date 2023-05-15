@@ -17,16 +17,51 @@ export const DesignerNav = ({ colorMode, setColorMode }) => {
   const navigate = useNavigate();
   const [drawer, setDrawer] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
-  let clicked = 0 
+  const [clicked, setClicked] = useState(0)
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
     setDrawer(!drawer);
-   clicked = clicked + 1 
+    setClicked(clicked + 1)
   };
   const handleClose = () => {
     setAnchorEl(null);
     setDrawer(!drawer);
   };
+
+  const CoolS = () => (
+    <svg
+      width={24}
+      height={24}
+      viewBox="0 0 16.139 49.253"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
+    >
+      <path
+        id="a"
+        d="M8.07 38.505V27.931L.132 21.322V10.747L8.07.173l7.937 10.574v10.575l-4.016 3.305"
+        fill="none"
+        stroke="#7e57c2"
+        strokeLinejoin="round"
+        strokeWidth={3}
+      />
+      <use
+        transform="rotate(180 8.07 24.646)"
+        width="100%"
+        height="100%"
+        xlinkHref="#a"
+      />
+    </svg>
+  );
+
+
+
+  const coolSChoice = () => {
+    if(clicked > 5){
+      return CoolS()
+    } else{
+      return <MenuIcon />
+    }
+  }
 
   return (
     <>
@@ -84,7 +119,7 @@ export const DesignerNav = ({ colorMode, setColorMode }) => {
                 }}
                 color="inherit"
               >
-                {drawer === true ? <CloseIcon /> : <MenuIcon />}
+                {drawer === true ? <CloseIcon /> : coolSChoice()}
               </IconButton>
               <Menu anchorEl={anchorEl} open={drawer} onClose={handleClose}>
                 <MenuItem
